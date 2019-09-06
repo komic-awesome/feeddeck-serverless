@@ -5,6 +5,7 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "aws-sdk": "^2.524.0",
     "fonts.css": "^2.0.0",
     "gatsby": "^2.15.9",
     "gatsby-image": "^2.2.17",
