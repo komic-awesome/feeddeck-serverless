@@ -113,7 +113,7 @@ const IndexPage = () => {
 
   return (
     <Layout>
-      <SEO/>
+      <SEO title="首页"/>
       { nodes.map(({ node }, index) => ( <DailyBlock key={index} daily={node}/> )) }
     </Layout>
   )
