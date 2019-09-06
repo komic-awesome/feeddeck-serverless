@@ -3,7 +3,12 @@ const AWS = require('aws-sdk')
 const _ = require('lodash')
 
 function queryDailes() {
-  const docClient = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' })
+  const docClient = new AWS.DynamoDB.DocumentClient({
+    region: 'us-east-1',
+    accessKeyId: process.env.ENV_AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.ENV_SECRET_ACCESS_KEY
+  })
+
   const params = {
     TableName: 'Dailies'
   }
