@@ -120,3 +120,35 @@ module.exports.gamersky = async event => {
     ),
   }
 }
+
+module.exports.duowan = async event => {
+  const resp = await axios.get('http://www.duowan.com')
+  const $ = cheerio.load(resp.data)
+
+  const links = $('.today-news .primary-box-hd a').map((index, element) => {
+    element = $(element)
+
+    return {
+      title: element.text(),
+      url: element.attr('href'),
+      isHot: element.parent().is('h2'),
+    }
+  }).get()
+
+  await recordDailyToDynamodb({
+    namespace: 'duowan',
+    links,
+  })
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify(
+      {
+        message: links,
+        input: event,
+      },
+      null,
+      2
+    ),
+  }
+}
