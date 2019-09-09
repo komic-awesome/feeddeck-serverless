@@ -88,3 +88,35 @@ module.exports.crawl3dm = async event => {
     ),
   }
 }
+
+module.exports.gamersky = async event => {
+  const resp = await axios.get('https://www.gamersky.com')
+  const $ = cheerio.load(resp.data)
+
+  const links = $('.Mid1Mcon .bgx a').map((index, element) => {
+    element = $(element)
+
+    return {
+      title: element.text(),
+      url: element.attr('href'),
+      isHot: element.hasClass('t'),
+    }
+  }).get()
+
+  await recordDailyToDynamodb({
+    namespace: 'gamersky',
+    links,
+  })
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify(
+      {
+        message: links,
+        input: event,
+      },
+      null,
+      2
+    ),
+  }
+}
